@@ -5,4 +5,7 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
+import './style/reset.css'
+import './permission'
+
 createApp(App).use(store).use(router).use(ElementPlus).mount('#app')

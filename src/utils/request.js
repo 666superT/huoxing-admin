@@ -1,4 +1,6 @@
 import axios from 'axios'
+import store from '@/store'
+
 const http = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 5000
@@ -6,6 +8,11 @@ const http = axios.create({
 // 请求拦截
 http.interceptors.request.use(
   (config) => {
+    const token = store.getters.userInfo.token
+    if (token) {
+      config.headers.Authorization = token
+    }
+
     return config
   },
   (err) => {
@@ -15,6 +22,9 @@ http.interceptors.request.use(
 // 响应拦截
 http.interceptors.response.use(
   (res) => {
+    if (res.data.code === 200) {
+      return res.data.data
+    }
     return res
   },
   (err) => {
