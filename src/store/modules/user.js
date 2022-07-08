@@ -5,12 +5,16 @@ export default {
   namespaced: true,
   state: {
     userInfo: getItem('userInfo') || [],
-    premissionList: {}
+    premissionList: getItem('premissionList')
   },
   mutations: {
     SET_USER_INFO(state, res) {
       state.userInfo = res
       setItem('userInfo', res)
+    },
+    SET_PERMISSION(state, res) {
+      state.premissionList = res
+      setItem('premissionList', res)
     }
   },
   actions: {
@@ -18,10 +22,12 @@ export default {
       const res = await login(params)
       // console.log(res)
       commit('SET_USER_INFO', res)
+      return res
     },
     async handleAuthority({ commit }) {
       const res = await getAuthority()
-      console.log(res)
+      commit('SET_PERMISSION', res)
+      return res
     }
   }
 }

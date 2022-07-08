@@ -8,12 +8,12 @@ router.beforeEach(async (to, from, next) => {
       next(from.path)
     } else {
       const premissionList = store.getters.premissionList
-      if (premissionList) {
+      if (token && premissionList) {
         next()
       } else {
-        const res = store.dispatch('user/handleAuthority')
+        const res = await store.dispatch('user/handleAuthority')
         if (res) {
-          // return next(to.path)
+          return next(to.path)
         } else {
           next('/login')
         }

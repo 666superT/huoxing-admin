@@ -11,7 +11,7 @@ function login(data) {
  * 获取权限列表
  */
 function getAuthority() {
-  return request({ url: '/users/getPermissionList' })
+  return request({ url: '/users/getPermissionList', method: 'get' })
 }
 
 export { login, getAuthority }

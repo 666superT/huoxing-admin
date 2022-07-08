@@ -10,7 +10,7 @@ http.interceptors.request.use(
   (config) => {
     const token = store.getters.userInfo.token
     if (token) {
-      config.headers.Authorization = token
+      config.headers.Authorization = `Bearer ${token}`
     }
 
     return config
@@ -25,7 +25,6 @@ http.interceptors.response.use(
     if (res.data.code === 200) {
       return res.data.data
     }
-    return res
   },
   (err) => {
     return Promise.reject(err)

@@ -5,7 +5,7 @@
       <div class="form-content">
         <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules">
           <el-form-item prop="userName">
-            <el-input v-model="ruleForm.userName" autocomplete="off">
+            <el-input v-model.trim="ruleForm.userName" autocomplete="off">
               <template #prefix>
                 <el-icon><User /></el-icon>
               </template>
@@ -13,7 +13,7 @@
           </el-form-item>
           <el-form-item prop="userPwd">
             <el-input
-              v-model="ruleForm.userPwd"
+              v-model.trim="ruleForm.userPwd"
               type="password"
               autocomplete="off"
             >
@@ -38,8 +38,10 @@ import { reactive, ref } from 'vue'
 import { validatePass } from './validate'
 import { View, User } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
 
 const ruleForm = reactive({
   userName: 'admin',
@@ -56,9 +58,10 @@ const rules = reactive({
  */
 const ruleFormRef = ref()
 function handleLogin() {
-  ruleFormRef.value.validate((valid) => {
+  ruleFormRef.value.validate(async (valid) => {
     if (valid) {
-      store.dispatch('user/handleLogin', ruleForm)
+      const res = await store.dispatch('user/handleLogin', ruleForm)
+      if (res) router.push('/')
     }
   })
 }
