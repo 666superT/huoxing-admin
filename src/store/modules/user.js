@@ -4,7 +4,7 @@ import { setItem, getItem } from '@/utils/storage'
 export default {
   namespaced: true,
   state: {
-    userInfo: getItem('userInfo') || [],
+    userInfo: getItem('userInfo') || {},
     premissionList: getItem('premissionList')
   },
   mutations: {
@@ -28,6 +28,10 @@ export default {
       const res = await getAuthority()
       commit('SET_PERMISSION', res)
       return res
+    },
+    logOut({ commit }) {
+      commit('SET_USER_INFO', '')
+      commit('SET_PERMISSION', '')
     }
   }
 }

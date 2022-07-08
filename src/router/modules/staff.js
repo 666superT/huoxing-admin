@@ -8,7 +8,7 @@ export default {
   meta: { title: '系统管理', icon: 'setting' },
   children: [
     {
-      path: '/system/staff',
+      path: '/staff',
       name: 'staff',
       component: () => import('../../views/staff'),
       meta: { title: '员工管理' }

@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import layout from '../layout'
 import user from './modules/user'
 import menu from './modules/menu'
 import role from './modules/role'
@@ -8,6 +7,7 @@ import salary from './modules/salary'
 import staff from './modules/staff'
 import approve from './modules/approve'
 import leave from './modules/leave'
+import layout from '../layout'
 
 export const routes = [
   {
@@ -34,15 +34,16 @@ export const routes = [
   }
 ]
 
+// TODO  bug路由跳转不过去
 export const privateRoutes = [
-  user,
-  menu,
   role,
   dept,
   salary,
   staff,
   approve,
-  leave
+  leave,
+  user,
+  menu
 ]
 
 const router = createRouter({

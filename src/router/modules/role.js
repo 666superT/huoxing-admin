@@ -1,5 +1,4 @@
 import layout from '../../layout'
-
 export default {
   path: '/system',
   name: 'system',

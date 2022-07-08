@@ -13,7 +13,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         const res = await store.dispatch('user/handleAuthority')
         if (res) {
-          return next(to.path)
+          next(to.path)
         } else {
           next('/login')
         }

@@ -20,4 +20,15 @@ import AppSidebar from './sidebar'
 import AppMain from './appmain'
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-container {
+  height: 100%;
+  .el-aside {
+    height: 100%;
+  }
+  .el-header {
+    background: #fff;
+    height: 50px;
+  }
+}
+</style>
