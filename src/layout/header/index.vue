@@ -4,7 +4,9 @@
       <el-icon><Fold /></el-icon>
       <el-breadcrumb :separator-icon="ArrowRight">
         <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item v-if="$route.path==='/welcome'">欢迎体验Vue3全栈课程</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="$route.path === '/welcome'"
+          >欢迎体验Vue3全栈课程</el-breadcrumb-item
+        >
         <el-breadcrumb-item v-else>{{ crumbs.title }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -53,9 +55,11 @@ const crumbs = reactive({
 watch(
   () => route.matched,
   (newVal, oldVal) => {
-    // console.log(newVal)
+    console.log(newVal)
     // console.log(oldVal)
-    crumbs.title = newVal[1].meta.title
+    if (newVal[0].path !== '/login') {
+      crumbs.title = newVal[1].meta.title
+    }
   },
   { immediate: true }
 )
