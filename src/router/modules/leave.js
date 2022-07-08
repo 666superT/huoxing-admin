@@ -12,6 +12,12 @@ export default {
       name: 'leave',
       component: () => import('../../views/leave'),
       meta: { title: '休假申请' }
+    },
+    {
+      path: '/audit/approve',
+      name: 'approve',
+      component: () => import('../../views/approve'),
+      meta: { title: '待审批' }
     }
   ]
 }

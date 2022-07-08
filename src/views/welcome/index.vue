@@ -12,9 +12,9 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
-console.log(router.getRoutes())
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
+// console.log(router.getRoutes())
 </script>
 
 <style lang="scss" scoped>
