@@ -55,7 +55,7 @@ const crumbs = reactive({
 watch(
   () => route.matched,
   (newVal, oldVal) => {
-    console.log(newVal)
+    // console.log(newVal)
     // console.log(oldVal)
     if (newVal[0].path !== '/login') {
       crumbs.title = newVal[1].meta.title

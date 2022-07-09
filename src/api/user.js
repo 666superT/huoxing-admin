@@ -14,4 +14,11 @@ function getAuthority() {
   return request({ url: '/users/getPermissionList', method: 'get' })
 }
 
-export { login, getAuthority }
+/**
+ * 获取用户列表
+ */
+function getUserList(data) {
+  return request({ url: '/users/list', method: 'get', data })
+}
+
+export { login, getAuthority, getUserList }

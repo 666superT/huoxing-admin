@@ -4,15 +4,22 @@
     :tableClum="tableClum"
     :checkbox="checkbox"
     :tableBtn="tableBtn"
+    :tableData="tableData"
+    :page="page"
   ></base-table>
 </template>
 
 <script setup>
 import QueryForm from '../../components/QueryForm.vue'
 import BaseTable from '../../components/BaseTable.vue'
+import { getUserList } from '../../api/user'
 import { reactive, ref } from 'vue'
+// import dayjs from 'dayjs'
 
 const checkbox = ref(true)
+const page = ref(true)
+
+const tableData = ref([])
 
 const tableBtn = reactive([
   {
@@ -43,16 +50,31 @@ const tableClum = reactive([
     prop: 'userEmail'
   },
   {
+    type: 'function',
     label: '用户角色',
-    prop: 'roleList'
+    prop: 'role',
+    callback(val) {
+      if (val.role === 1) return '普通用户'
+    }
   },
   {
+    type: 'function',
     label: '用户状态',
-    prop: 'state'
+    prop: 'state',
+    callback(val) {
+      if (val.state === 0) return '所有'
+      if (val.state === 1) return '在职'
+      if (val.state === 2) return '离职'
+      if (val.state === 3) return '试用期'
+    }
   },
   {
+    // type: 'function',
     label: '注册时间',
     prop: 'createTime'
+    // cllback(val) {
+    //   dayjs(val.createTime).format('YYYY-MM-DD HH:mm:ss')
+    // }
   },
   {
     label: '最后登录时间',
@@ -83,6 +105,7 @@ const query = reactive({
   userName: '',
   state: ''
 })
+
 const queryClum = reactive([
   {
     label: '用户ID',
@@ -137,6 +160,25 @@ const queryClum = reactive([
     ]
   }
 ])
+
+const pageNum = ref('1')
+const pageSize = ref('6')
+
+/**
+ * 渲染列表
+ */
+async function userList() {
+  const res = await getUserList({
+    pageNum: pageNum.value,
+    pageSize: pageSize.value,
+    userId: query.userId,
+    userName: query.userName,
+    state: query.state
+  })
+  console.log(res)
+  tableData.value = res.list
+}
+userList()
 </script>
 
 <style lang="scss" scoped></style>
