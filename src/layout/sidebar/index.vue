@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="menuHeader">
       <img src="https://cn.vuejs.org/images/logo.svg" alt="" />
-      <h2>Super T</h2>
+      <h2>admind</h2>
     </div>
     <menu-tree></menu-tree>
   </div>

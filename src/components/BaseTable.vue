@@ -47,13 +47,20 @@
     </el-table>
 
     <template v-if="props.page">
-      <el-pagination background layout="prev, pager, next" :total="1000" />
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="props.total"
+        @current-change="handleCurrentChange"
+      />
     </template>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, defineEmits } from 'vue'
+
+const emit = defineEmits(['handleCurrentChange'])
 const props = defineProps({
   checkbox: {
     type: Boolean,
@@ -71,11 +78,22 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
+  total: {
+    type: Number,
+    default: 0
+  },
   tableData: {
     type: Array,
     default: () => []
   }
 })
+
+/**
+ * 切换第几页
+ */
+function handleCurrentChange(val) {
+  emit('handleCurrentChange', val)
+}
 </script>
 
 <style lang="scss" scoped>

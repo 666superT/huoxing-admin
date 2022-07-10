@@ -1,11 +1,19 @@
 <template>
-  <query-form :queryClum="queryClum" :model="query"></query-form>
+  <query-form
+    :queryClum="queryClum"
+    :model="query"
+    @handleQueryFormEvent="handleQueryFormEvent"
+    ref="ooo"
+  ></query-form>
+
   <base-table
     :tableClum="tableClum"
     :checkbox="checkbox"
     :tableBtn="tableBtn"
     :tableData="tableData"
     :page="page"
+    :total="total"
+    @handleCurrentChange="handleCurrentChange"
   ></base-table>
 </template>
 
@@ -14,6 +22,7 @@ import QueryForm from '../../components/QueryForm.vue'
 import BaseTable from '../../components/BaseTable.vue'
 import { getUserList } from '../../api/user'
 import { reactive, ref } from 'vue'
+import { throttle } from '../../utils/throttle'
 // import dayjs from 'dayjs'
 
 const checkbox = ref(true)
@@ -55,6 +64,7 @@ const tableClum = reactive([
     prop: 'role',
     callback(val) {
       if (val.role === 1) return '普通用户'
+      if (val.role === 0) return '超级管理员'
     }
   },
   {
@@ -162,7 +172,9 @@ const queryClum = reactive([
 ])
 
 const pageNum = ref('1')
-const pageSize = ref('6')
+const pageSize = ref('10')
+const total = ref()
+const ooo = ref()
 
 /**
  * 渲染列表
@@ -175,10 +187,43 @@ async function userList() {
     userName: query.userName,
     state: query.state
   })
-  console.log(res)
+  // console.log(res)
   tableData.value = res.list
+  total.value = res.page.total
 }
 userList()
+
+/**
+ * 切换页码
+ */
+function handleCurrentChange(val) {
+  pageNum.value = val
+  userList()
+}
+
+/**
+ * 搜索框事件
+ */
+function handleQueryFormEvent(val) {
+  if (val === 'query') handleQueryUser()
+  // if (val === 'reset') handleResetform()
+}
+/**
+ * 搜索
+ */
+function handleQueryUser() {
+  // console.log(111)
+  pageNum.value = '1'
+  // 添加节流每秒只能点一次
+  throttle(userList, 1000)
+}
+/**
+ * 重置搜索框
+ */
+// TODO找不到子组件节点
+// function handleResetform() {
+//   console.log(ooo.value)
+// }
 </script>
 
 <style lang="scss" scoped></style>

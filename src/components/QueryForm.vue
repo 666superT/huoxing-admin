@@ -1,6 +1,11 @@
 <template>
   <div class="query-from">
-    <el-form :inline="true" :model="props.model" class="demo-form-inline">
+    <el-form
+      :inline="true"
+      :model="props.model"
+      class="demo-form-inline"
+      ref="queryForm"
+    >
       <template v-for="(v, i) in props.queryClum" :key="i">
         <template v-if="v.type === 'text'">
           <el-form-item v-bind="v">
@@ -26,9 +31,16 @@
           </el-form-item>
         </template>
 
-        <template v-if="v.type==='btn'">
+        <template v-if="v.type === 'btn'">
           <el-form-item>
-            <el-button v-for="(j,k) in v.btns" :key="k" :type="j.type" :size='j.size' @click="onSubmit(j.method)">{{j.name}}</el-button>
+            <el-button
+              v-for="(j, k) in v.btns"
+              :key="k"
+              :type="j.type"
+              :size="j.size"
+              @click="onSubmit(j.method)"
+              >{{ j.name }}</el-button
+            >
           </el-form-item>
         </template>
       </template>
@@ -37,7 +49,10 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, defineEmits, ref } from 'vue'
+
+const emit = defineEmits(['handleQueryFormEvent'])
+
 const props = defineProps({
   model: {
     type: Object,
@@ -48,6 +63,17 @@ const props = defineProps({
     default: () => []
   }
 })
+
+/**
+ * 搜索框按钮事件
+ */
+const queryForm = ref()
+function onSubmit(val) {
+  emit('handleQueryFormEvent', val)
+  if (val === 'reset') {
+    queryForm.value.resetFields()
+  }
+}
 </script>
 
 <style lang="scss" scoped>
